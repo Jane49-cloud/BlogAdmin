@@ -1,0 +1,90 @@
+
+import React, { useEffect, useState } from "react";
+import { blogs } from "../../TestData/blogs";
+import { LibraryAdd } from "@mui/icons-material";
+
+const Blogs = () => {
+  const [allBlogs, setAllBlogs] = useState(blogs);
+  const [pending, setPending] = useState([]);
+
+  useEffect(() => {
+    const pendingBlogs = allBlogs.filter((blog) => blog.status === "pending");
+    setPending(pendingBlogs);
+  }, [allBlogs]);
+  console.log(pending);
+
+  return (
+    <main>
+      <div>
+        {/* header */}
+        <div className=" m-2 d-flex justify-content-between">
+          <div></div>
+          <div className="btn btn-primary m-2">
+            <LibraryAdd />
+            New Blog
+          </div>
+        </div>
+        {/* end header */}
+        {/* start pending posts */}
+
+        <div className="container">
+          <section className="">
+            <h3 className="text-left font-weight-bold mb-2">Pending Posts</h3>
+
+            <div className="row">
+              {pending.map((blog) => {
+                return (
+                  <div key={blog.id} className="col-md-4 mb-4">
+                    <div className="card">
+                      <div className="view overlay">
+                        <img
+                          src="https://mdbootstrap.com/img/Photos/Horizontal/City/6-col/img%20(49).jpg"
+                          className="card-img-top"
+                          alt=""
+                        />
+                        <a>
+                          <div className="mask rgba-white-slight waves-effect waves-light"></div>
+                        </a>
+                      </div>
+                      <div className="card-body">
+                        <h4 className="card-title">
+                          <strong>{blog.title.substring(0, 25)}...</strong>
+                        </h4>
+                        <hr />
+
+                        <p className="card-text mb-3">
+                          {blog.content.substring(0, 100)}
+                        </p>
+                        <p className="font-small font-weight-bold dark-grey-text mb-1">
+                          <i className="far fa-clock-o"></i>
+                          27/08/2019
+                        </p>
+                        <p className="font-small grey-text mb-0">
+                          {blog.author}
+                        </p>
+                        <div className="d-flex justify-content-between">
+                          <button className="btn btn-success">publish</button>
+                          <button className="btn btn-danger">Denie</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="text-center mt-4 mb-5">
+              <a className="black-text font-weight-bold" href="#!">
+                Browse all articles <i class="fa fa-angle-right"></i>
+              </a>
+            </div>
+          </section>
+        </div>
+
+        {/* end pending posts */}
+      </div>
+    </main>
+  );
+};
+
+export default Blogs;
